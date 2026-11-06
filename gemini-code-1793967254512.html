@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Simple Series Hub</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --border: #262626;
+      --text-main: #ffffff;
+      --text-muted: #525252;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      user-select: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    /* 화면 크기에 맞춰 반응형으로 줄 맞춰지는 그리드 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    /* 카드 형태의 이동 버튼 */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 140px;
+      cursor: pointer;
+      transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+
+    .card:hover {
+      border-color: #555555;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      color: var(--text-muted);
+      transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+
+    .card:hover .card-arrow {
+      color: var(--text-main);
+      transform: translate(2px, -2px);
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1 class="title">The Simple Series</h1>
+      <p class="subtitle">Minimalist web tools and practice utilities</p>
+    </header>
+
+    <!-- 링크 카드들이 자동으로 배치되는 공간 -->
+    <main class="grid" id="series-grid"></main>
+
+    <footer>
+      &copy; The Simple Series. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // 새 사이트를 추가할 때 아래 배열에 객체 항목만 추가하면 됩니다!
+    // -------------------------------------------------------------
+    const sites = [
+      {
+        title: "Simple Typing",
+        description: "Smooth English typing practice with natural audio feedback.",
+        url: "https://simple-typing-fawn.vercel.app" // 이동할 실제 URL 주소
+      }];
+
+    const grid = document.getElementById("series-grid");
+
+    // 배열(sites)에 맞춰 카드를 생성하고 자동 줄맞춤 그리드로 렌더링
+    function renderGrid() {
+      grid.innerHTML = sites
+        .map(site => `
+          <a href="${site.url}" class="card" ${site.url.startsWith("http") ? 'target="_blank" rel="noopener noreferrer"' : ""}>
+            <div class="card-header">
+              <span class="card-title">${site.title}</span>
+              <span class="card-arrow">↗</span>
+            </div>
+            <p class="card-desc">${site.description}</p>
+          </a>
+        `)
+        .join("");
+    }
+
+    renderGrid();
+  </script>
+</body>
+</html>
